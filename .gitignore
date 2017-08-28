@@ -1,0 +1,4 @@
+.vscode
+node_modules
+app/**/*.map
+app/**/*.js

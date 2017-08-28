@@ -1,0 +1,23 @@
+{
+    "name": "Homepage2",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@types/angular": "^1.6.26",
+        "@types/angular-sanitize": "^1.3.6",
+        "@types/gapi": "0.0.33",
+        "@types/gapi.auth2": "0.0.41",
+        "@types/jquery": "^3.2.12",
+        "angular": "^1.6.5",
+        "angular-sanitize": "^1.6.6",
+        "bootstrap": "^3.3.7",
+        "jquery": "^3.2.1"
+    }
+}

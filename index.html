@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" href="/index.css">
+</head>
+
+<body ng-controller="MainController as vm" ng-cloak style="padding-top: 50px">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                <a class="navbar-brand" href="#">Home</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <form class="navbar-form navbar-right">
+                    <button class="btn btn-success" ng-click="vm.auth.isSignedIn?vm.signOut():vm.signIn();" ng-bind="vm.auth.isSignedIn?'Sign Out':'Sign In'"></button>
+                </form>
+                <form class="navbar-form navbar-left" role="search" method="get" target="_blank" action="https://www.google.com/search?">
+                    <div class="form-group">
+                        <input type="text" name="q" class="form-control typeahead gsfi" placeholder="Search for..." size="40" x-webkit-speech>
+                    </div>
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Hello, world!</h1>
+            <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron
+                and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Heading</h2>
+                <p ng-repeat="label in vm.gmail.labels">{{label.name}} ({{label.type}})</p>
+                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+                    condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+                    Donec sed odio dui. </p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Messages</h2>
+                <p class="alert alert-success btn-block" ng-repeat="thread in vm.gmail.threads" ng-bind-html="thread.snippet"></p>
+                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+                    condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+                    Donec sed odio dui. </p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Heading</h2>
+                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta
+                    felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+                    massa justo sit amet risus.</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+        </div>
+
+        <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/node_modules/angular/angular.min.js"></script>
+        <script src="/node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+
+        <script src="/app/app.js"></script>
+        <script src="/app/google.auth.js"></script>
+        <script src="/app/gmail.service.js"></script>
+        <script src="/app/main.controller.js"></script>
+
+        <script src="https://apis.google.com/js/api.js"></script>
+
+</body>
+
+</html>
