@@ -3,7 +3,7 @@ declare namespace gapi.client.Request { };
 namespace AppDomain {
 
 
-    export interface GmailMessage {
+    export class GmailMessage {
         from: string;
         subject: string;
         body: string;
@@ -64,13 +64,18 @@ namespace AppDomain {
         getGmailMessages() {
             return gapi.client["gmail"].users.threads.list({ userId: 'me', labelIds: ['INBOX', 'UNREAD'] })
                 .then(response => {
+                    if (response.result.theads === undefined) { 
+                        return [];
+                    }
                     const requests = response.result.threads.map(thread => {
                         return gapi.client["gmail"].users.messages.get({ userId: 'me', id: thread.id })
                             .then(response => {
                                 let message = response.result;
                                 return {
-                                    from: message.payload.headers[17].value,
-                                    subject: message.payload.headers[21].value,
+                                    //from: message.payload.headers[17].value,
+                                    from: message.payload.headers.find(header => header.name === 'From').value,
+                                    //subject: message.payload.headers[21].value,
+                                    subject: message.payload.headers.find(header => header.name === 'Subject').value,
                                     body: thread.snippet
                                 };
                             });

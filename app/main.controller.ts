@@ -2,8 +2,7 @@ namespace AppDomain {
 
     export class MainController {
 
-        gmailMessages: Array<GmailMessage>;
-        profile: any;
+        gmailMessages: GmailMessage[];
 
         static $inject: string[] = ["$scope", "GoogleAuth", "GmailService"];
 
@@ -43,6 +42,7 @@ namespace AppDomain {
         getGmailMessages() {
             this.gmailService.getGmailMessages().then(messages => {
                 this.gmailMessages = messages;
+                this.$scope.$apply();
             });
         }
     }
