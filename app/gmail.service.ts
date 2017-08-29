@@ -1,62 +1,37 @@
-declare namespace gapi.client.Request { };
+//declare namespace gapi.client.Request { };
 
 namespace AppDomain {
 
-
     export class GmailMessage {
+        id: string;
         from: string;
         subject: string;
         body: string;
     }
 
-    export interface Gmail {
-        labels: Label[];
-        threads: Thread[];
-    }
-
-    export interface Label {
-        id: string;
-        name: string;
-        type: string;
-    }
-
-    export interface Thread {
-        id: string;
-        snippet: string;
-        historyId: string;
-    }
+    // export interface Label {
+    //     id: string;
+    //     name: string;
+    //     type: string;
+    // }
 
     export class GmailService {
 
         static $inject: string[] = ["$q"];
 
         constructor(private $q: ng.IQService) {
-
-            console.log('GmailService');
-
+            console.log('GmailService initialized');
         }
 
         // Get gmail labels
-        getLabels() {
-            const deferred = this.$q.defer();
-
-            gapi.client["gmail"].users.labels.list({ 'userId': 'me' }).then(response => {
-                deferred.resolve(response.result.labels);
-            }, response => {
-                deferred.reject(response);
-            });
-
-            return deferred.promise;
-        }
-
-        // getThreads(): any {
+        // getLabels() {
         //     const deferred = this.$q.defer();
-        //     gapi.client["gmail"].users.threads.list({ userId: 'me', labelIds: ['INBOX', 'UNREAD'] })
-        //         .then(response => {
-        //             deferred.resolve(response.result.threads);
-        //         }, response => {
-        //             deferred.reject(response);
-        //         });
+
+        //     gapi.client["gmail"].users.labels.list({ 'userId': 'me' }).then(response => {
+        //         deferred.resolve(response.result.labels);
+        //     }, response => {
+        //         deferred.reject(response);
+        //     });
 
         //     return deferred.promise;
         // }
@@ -64,7 +39,7 @@ namespace AppDomain {
         getGmailMessages() {
             return gapi.client["gmail"].users.threads.list({ userId: 'me', labelIds: ['INBOX', 'UNREAD'] })
                 .then(response => {
-                    if (response.result.theads === undefined) { 
+                    if (response.result.threads === undefined) { 
                         return [];
                     }
                     const requests = response.result.threads.map(thread => {
@@ -72,9 +47,8 @@ namespace AppDomain {
                             .then(response => {
                                 let message = response.result;
                                 return {
-                                    //from: message.payload.headers[17].value,
+                                    id: message.id,
                                     from: message.payload.headers.find(header => header.name === 'From').value,
-                                    //subject: message.payload.headers[21].value,
                                     subject: message.payload.headers.find(header => header.name === 'Subject').value,
                                     body: thread.snippet
                                 };
@@ -84,30 +58,6 @@ namespace AppDomain {
                     return this.$q.all(requests);
                 });
         }
-
-        // getGmailMessages(): any {
-        //     const deferred = this.$q.defer();
-        //     let gmailMessages: GmailMessage[] = [];
-        //     console.log('getGmailMessages');
-        //     gapi.client["gmail"].users.threads.list({ userId: 'me', labelIds: ['INBOX', 'UNREAD'] }).then(response => {
-        //         let threads = response.result.threads;
-        //         angular.forEach(threads, thread => {
-        //             gapi.client["gmail"].users.messages.get({ userId: 'me', id: thread.id }).then(response => {
-        //                 let message = response.result;
-        //                 var gmailMessage = {
-        //                     from: message.payload.headers[17].value,
-        //                     subject: message.payload.headers[21].value,
-        //                     body: thread.snippet
-        //                 };
-        //                 gmailMessages.push(gmailMessage);
-        //             });
-        //         });
-
-        //         deferred.resolve(gmailMessages);
-        //     });
-
-        //     return deferred.promise;
-        // }
     }
 
     angular.module("app").service("GmailService", GmailService);

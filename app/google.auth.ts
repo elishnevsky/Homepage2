@@ -13,10 +13,8 @@ namespace AppDomain {
         static $inject: string[] = ["$rootScope"];
 
         constructor(private $rootScope: ng.IRootScopeService) {
-
-            console.log('GoogleAuth');
+            console.log('GoogleAuth initialized');
             gapi.load('client:auth2', () => this.initClient());
-
         }
 
         // Initializes the API client library and sets up sign-in state listeners

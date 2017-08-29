@@ -2,22 +2,26 @@ namespace AppDomain {
 
     export class MainController {
 
+        currentDate: Date = new Date();
         gmailMessages: GmailMessage[];
 
-        static $inject: string[] = ["$scope", "GoogleAuth", "GmailService"];
+        static $inject: string[] = ['$scope', 'GoogleAuth', 'GmailService', '$interval'];
 
-        constructor(private $scope: ng.IScope, private auth: GoogleAuth, private gmailService: GmailService) {
-            console.log('MainController');
+        constructor(private $scope: ng.IScope, private auth: GoogleAuth, private gmailService: GmailService, public $interval: ng.IIntervalService) {
+            console.log('MainController initialized');
             this.init();
         }
 
         init() {
-
-            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => {
-                if (isSignedIn) {
-                    this.getGmailMessages();
-                }
-            });
+            // set watch on signed-in status
+            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { if (isSignedIn) { this.getGmailMessages(); } });
+            // set timer for date display, check every minute
+            this.$interval(() => {
+                this.currentDate = new Date();
+                if (!this.auth.isSignedIn) return;
+                console.log('Gmail check');
+                this.getGmailMessages();
+            }, 60000);
         }
 
         signIn() {
@@ -47,6 +51,6 @@ namespace AppDomain {
         }
     }
 
-    angular.module("app").controller("MainController", MainController);
+    angular.module('app').controller('MainController', MainController);
 
 }
