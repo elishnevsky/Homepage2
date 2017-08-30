@@ -2,7 +2,7 @@ namespace AppDomain {
 
     angular.module("app", ['ngSanitize']);
     
-    console.log('App initialized');
+    console.log('App');
 
 }
 

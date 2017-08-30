@@ -15,12 +15,12 @@ namespace AppDomain {
     //     type: string;
     // }
 
-    export class GmailService {
+    export class GoogleService {
 
         static $inject: string[] = ["$q"];
 
         constructor(private $q: ng.IQService) {
-            console.log('GmailService initialized');
+            console.log('GmailService');
         }
 
         // Get gmail labels
@@ -60,5 +60,5 @@ namespace AppDomain {
         }
     }
 
-    angular.module("app").service("GmailService", GmailService);
+    angular.module("app").service("GoogleService", GoogleService);
 }

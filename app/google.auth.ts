@@ -13,24 +13,23 @@ namespace AppDomain {
         static $inject: string[] = ["$rootScope"];
 
         constructor(private $rootScope: ng.IRootScopeService) {
-            console.log('GoogleAuth initialized');
+            console.log('GoogleAuth');
             gapi.load('client:auth2', () => this.initClient());
         }
 
-        // Initializes the API client library and sets up sign-in state listeners
         private initClient() {
             gapi.client.init({
                 clientId: CLIENT_ID,
-                // apiKey: API_KEY, // <--- С ЭТИМ Я ПОЧЕМУ-ТО НЕ МОГУ ЗАПРОСИТЬ ЛЕЙБЛЫ ИЗ ГМЫЛЕ
+                // apiKey: API_KEY
                 scope: SCOPE,
                 discoveryDocs: DISCOVERY_DOCS
             }).then(() => {
                 gapi.auth2.getAuthInstance().isSignedIn.listen(isSignedIn => {
                     this.isSignedIn = isSignedIn;
-                    this.$rootScope.$apply(); // <--- ЭТО НЕОБХОДИМО ПОТОМУ ЧТО ANGULAR JS ТУПОЙ
+                    this.$rootScope.$apply();
                 });
                 this.isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
-                this.$rootScope.$apply(); // <--- ЭТО НЕОБХОДИМО ПОТОМУ ЧТО ANGULAR JS ТУПОЙ
+                this.$rootScope.$apply();
             });
         }
 

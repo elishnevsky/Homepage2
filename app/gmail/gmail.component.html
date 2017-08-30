@@ -1,0 +1,11 @@
+<div>
+    <h2>Gmail Component</h2>
+    <div class="alert alert-danger" ng-hide="vm.gmailMessages">Please wait, loading...</div>
+    <a ng-repeat="message in vm.gmailMessages" href="https://mail.google.com/mail/u/0/#inbox/{{message.id}}" target="_blank">
+        <div class="alert alert-success">
+            <strong ng-bind-html="message.from"></strong><br>
+            <strong ng-bind-html="message.subject"></strong>
+            <div ng-bind-html="message.body"></div>
+        </div>
+    </a>
+</div>

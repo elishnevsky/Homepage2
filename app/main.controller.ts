@@ -5,9 +5,9 @@ namespace AppDomain {
         currentDate: Date = new Date();
         gmailMessages: GmailMessage[];
 
-        static $inject: string[] = ['$scope', 'GoogleAuth', 'GmailService', '$interval'];
+        static $inject: string[] = ['$scope', 'GoogleAuth', 'GoogleService', '$interval'];
 
-        constructor(private $scope: ng.IScope, private auth: GoogleAuth, private gmailService: GmailService, public $interval: ng.IIntervalService) {
+        constructor(private $scope: ng.IScope, private auth: GoogleAuth, private service: GoogleService, public $interval: ng.IIntervalService) {
             console.log('MainController initialized');
             this.init();
         }
@@ -34,17 +34,17 @@ namespace AppDomain {
 
         // getGmail() {
         //     // get labels
-        //     this.gmailService.getLabels().then(labels => {
+        //     this.service.getLabels().then(labels => {
         //         this.gmail.labels = <Label[]>labels;
         //     });
         //     // get threads
-        //     this.gmailService.getMessages().then(threads => {
+        //     this.service.getMessages().then(threads => {
         //         this.gmail.threads = <Thread[]>threads;
         //     });
         // }
 
         getGmailMessages() {
-            this.gmailService.getGmailMessages().then(messages => {
+            this.service.getGmailMessages().then(messages => {
                 this.gmailMessages = messages;
                 this.$scope.$apply();
             });
