@@ -4,7 +4,6 @@ namespace AppDomain {
     const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest']; // Array of API discovery doc URLs for APIs used by the quickstart
     const CLIENT_ID = '597988925903-n92krp955lrp46mshfndmcvo0sqp2eks.apps.googleusercontent.com'; // Client ID and API key from the Developer Console
     const SCOPE = 'https://www.googleapis.com/auth/gmail.readonly'; // Authorization scopes required by the API; multiple scopes can be included, separated by spaces.
-    //const SCOPE = 'https://mail.google.com'
 
     export class GoogleAuth {
 

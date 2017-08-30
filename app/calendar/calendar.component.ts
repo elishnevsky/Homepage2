@@ -4,7 +4,6 @@ namespace AppDomain {
         public bindings: any;
         public controller: any;
         public controllerAs: string;
-        public template: string;
         public templateUrl: string;
 
         constructor() {
@@ -22,11 +21,14 @@ namespace AppDomain {
         
         constructor(private $scope: ng.IScope, private auth: GoogleAuth, private googleService: GoogleService) {
             console.log('CalendarComponent');
-            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { if (isSignedIn) this.getCalendarEvents(); });
+            //this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { if (isSignedIn) this.getCalendarEvents(); });
         }
         
         getCalendarEvents(): any {
-            console.log('getCalendarEvents Method not implemented.')
+            this.googleService.getCalendarEvents().then(events => {
+                this.calendarEvents = events;
+                this.$scope.$apply();
+            });
         }
     }
 

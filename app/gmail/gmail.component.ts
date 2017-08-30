@@ -4,7 +4,6 @@ namespace AppDomain {
         public bindings: any;
         public controller: any;
         public controllerAs: string;
-        public template: string;
         public templateUrl: string;
 
         constructor() {
@@ -16,13 +15,15 @@ namespace AppDomain {
 
     class GmailController {
 
+        isSignedIn: boolean;
         gmailMessages: GmailMessage[];
 
         static $inject: string[] = ['$scope', 'GoogleAuth', 'GoogleService', '$interval'];
 
         constructor(private $scope: ng.IScope, private auth: GoogleAuth, private googleService: GoogleService, public $interval: ng.IIntervalService) {
             console.log('GmailComponent');
-            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { if (isSignedIn) this.getGmailMessages(); });
+            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { this.isSignedIn = isSignedIn; if (isSignedIn) this.getGmailMessages(); });
+            this.$interval(() => { if (this.auth.isSignedIn) this.getGmailMessages(); }, 60000); // Check gmail message every minute
         }
 
         getGmailMessages() {

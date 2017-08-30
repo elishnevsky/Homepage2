@@ -4,7 +4,6 @@ namespace AppDomain {
         public bindings: any;
         public controller: any;
         public controllerAs: string;
-        public template: string;
         public templateUrl: string;
 
         constructor() {
@@ -15,6 +14,8 @@ namespace AppDomain {
     }
 
     class WeatherController {
+
+        weatherForecast: any;
         
         static $inject: string[] = ['$scope', 'GoogleAuth', 'GoogleService'];
         
@@ -24,7 +25,10 @@ namespace AppDomain {
         }
         
         getWeatherForecast(): any {
-            console.log('getWeatherForecast Method not implemented.')
+            this.googleService.getWeatherForecast().then(forecast => {
+                this.weatherForecast = forecast;
+                this.$scope.$apply();
+            });
         }
     }
 
