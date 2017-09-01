@@ -5,6 +5,7 @@
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="event in vm.calendarEvents">
                 <a href="{{event.htmlLink}}" target="_blank">{{event.summary}}</a>
+                <span class="pull-right">{{event.start|date}}</span>
             </li>
         </ul>
     </div>

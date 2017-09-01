@@ -16,19 +16,21 @@ namespace AppDomain {
     class WeatherController {
 
         weatherForecast: any;
-        
+
         static $inject: string[] = ['$scope', 'GoogleAuth', 'GoogleService'];
-        
+
         constructor(private $scope: ng.IScope, private auth: GoogleAuth, private googleService: GoogleService) {
             console.log('WeatherComponent');
-            //this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { if (isSignedIn) this.getWeatherForecast(); });
+            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { if (isSignedIn) this.getWeatherForecast(); });
         }
-        
+
         getWeatherForecast(): any {
+            console.log('WeatherComponent.getWeatherForecast()')
             this.googleService.getWeatherForecast().then(forecast => {
                 this.weatherForecast = forecast;
                 this.$scope.$apply();
             });
+            return;
         }
     }
 

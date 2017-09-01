@@ -19,9 +19,9 @@ namespace AppDomain {
 
     export class GoogleService {
 
-        static $inject: string[] = ['$q', '$http', '$sce'];
+        static $inject: string[] = ['$q', '$http'];
 
-        constructor(private $q: ng.IQService, private $http: ng.IHttpService, private $sce: ng.ISCEService) {
+        constructor(private $q: ng.IQService, private $http: ng.IHttpService) {
             console.log('GoogleService');
         }
 
@@ -69,8 +69,8 @@ namespace AppDomain {
                         id: event.id,
                         summary: event.summary,
                         htmlLink: event.htmlLink,
-                        start: event.start,
-                        end: event.end
+                        start: new Date(event.start.date == undefined ? event.start.dateTime == undefined ? '' : event.start.dateTime : event.start.date),
+                        end: new Date(event.end.date == undefined ? event.end.dateTime == undefined ? '' : event.end.dateTime  : event.end.date)
                     };
                     return calendarEvent;
                 });
@@ -78,14 +78,15 @@ namespace AppDomain {
             });
         }
 
+
+
         getWeatherForecast() {
-            let url = 'https://weather.gc.ca/city/pages/on-143_metric_e.html';
-            this.$sce.trustAsResourceUrl(url);
-            return this.$http.jsonp(url).then(response => {
-                var xxx = response;
-            }, response => {
-                var yyy = response;
-            })
+            //let url = 'https://weather.gc.ca/city/pages/on-143_metric_e.html';
+            const url = 'http://rss.newsru.com/top/big/';
+            return this.$http.jsonp(url);
+            // return this.$resource('http://ajax.googleapis.com/ajax/services/feed/load', {}, {
+            //     fetch: { method: 'JSONP', params: { v: '1.0', callback: 'JSON_CALLBACK' } }
+            // });
         }
     }
 
