@@ -15,13 +15,14 @@ namespace AppDomain {
 
     class CalendarController {
         
-        calendarEvents: any[];
+        isSignedIn: boolean;
+        calendarEvents: CalendarEvent[];
         
         static $inject: string[] = ['$scope', 'GoogleAuth', 'GoogleService'];
         
         constructor(private $scope: ng.IScope, private auth: GoogleAuth, private googleService: GoogleService) {
             console.log('CalendarComponent');
-            //this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { if (isSignedIn) this.getCalendarEvents(); });
+            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { this.isSignedIn = isSignedIn; if (isSignedIn) this.getCalendarEvents(); });
         }
         
         getCalendarEvents(): any {

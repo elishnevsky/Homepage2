@@ -21,7 +21,7 @@ namespace AppDomain {
         
         constructor(private $scope: ng.IScope, private auth: GoogleAuth, private googleService: GoogleService) {
             console.log('WeatherComponent');
-            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { if (isSignedIn) this.getWeatherForecast(); });
+            //this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { if (isSignedIn) this.getWeatherForecast(); });
         }
         
         getWeatherForecast(): any {
