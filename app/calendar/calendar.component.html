@@ -2,6 +2,11 @@
     <h2>Calendar Component</h2>
     <div ng-show="vm.isSignedIn">
         <div class="alert alert-danger" ng-hide="vm.calendarEvents">Please wait, loading...</div>
+
+        <datetimepicker data-ng-model="vm.dates"></datetimepicker>
+
+        <pre>{{vm.dates|json}}</pre>
+        
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="event in vm.calendarEvents">
                 <a href="{{event.htmlLink}}" target="_blank">{{event.summary}}</a>

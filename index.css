@@ -11,4 +11,7 @@ a:hover { text-decoration: none;  }
 /* .col-md-4 { border: 1px solid blue; } */
 /* .jumbotron { margin-top: 30px; } */
 
+.datetimepicker { width: 100%; border: 1px solid #ddd; margin-bottom: 15px; }
+
+
 

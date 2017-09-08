@@ -19,8 +19,10 @@ namespace AppDomain {
 
     export class GoogleService {
 
+        //static $inject: string[] = ['$q', '$http', '$sce'];
         static $inject: string[] = ['$q', '$http'];
 
+        //constructor(private $q: ng.IQService, private $http: ng.IHttpService, private $sce: ng.ISCEService) {
         constructor(private $q: ng.IQService, private $http: ng.IHttpService) {
             console.log('GoogleService');
         }
@@ -40,13 +42,6 @@ namespace AppDomain {
                                     snippet: thread.snippet
                                 };
                                 return gmailMessage;
-
-                                // return {
-                                //     id: message.id,
-                                //     from: message.payload.headers.find(header => header.name === 'From').value,
-                                //     subject: message.payload.headers.find(header => header.name === 'Subject').value,
-                                //     body: thread.snippet
-                                // };
                             });
                     });
 
@@ -55,7 +50,7 @@ namespace AppDomain {
         }
 
         getCalendarEvents() {
-            return gapi.client['calendar'].events.list({
+            return gapi.client.calendar.events.list({
                 calendarId: 'primary',
                 timeMin: (new Date()).toISOString(),
                 showDeleted: false,
@@ -70,7 +65,7 @@ namespace AppDomain {
                         summary: event.summary,
                         htmlLink: event.htmlLink,
                         start: new Date(event.start.date == undefined ? event.start.dateTime == undefined ? '' : event.start.dateTime : event.start.date),
-                        end: new Date(event.end.date == undefined ? event.end.dateTime == undefined ? '' : event.end.dateTime  : event.end.date)
+                        end: new Date(event.end.date == undefined ? event.end.dateTime == undefined ? '' : event.end.dateTime : event.end.date)
                     };
                     return calendarEvent;
                 });
@@ -78,15 +73,30 @@ namespace AppDomain {
             });
         }
 
+        getNewsHeadlines() {
+            const feed = 'http://rss.newsru.com/top/big/';
+            const url = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed);
+            return this.$http.get(url).then((response) => {
+                debugger;
+                var sss = response;
 
+            });
+        }
 
         getWeatherForecast() {
-            //let url = 'https://weather.gc.ca/city/pages/on-143_metric_e.html';
-            const url = 'http://rss.newsru.com/top/big/';
-            return this.$http.jsonp(url);
-            // return this.$resource('http://ajax.googleapis.com/ajax/services/feed/load', {}, {
-            //     fetch: { method: 'JSONP', params: { v: '1.0', callback: 'JSON_CALLBACK' } }
+            // //const url = 'https://weather.gc.ca/city/pages/on-143_metric_e.html';
+            // //const url = 'http://rss.newsru.com/top/big/';
+            // //return this.$http.get(url);
+            // // const url = 'http://samples.openweathermap.org/data/2.5/forecast?q=London,us&mode=xml&appid=b1b15e88fa797225412429c1c50c122a1';
+            // // const trustedUrl = this.$sce.trustAsResourceUrl(url);
+            // // return this.$http.jsonp(trustedUrl);
+            // const url = 'https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Frss.newsru.com%2Ftop%2Fbig%2F';
+            // return this.$http.get(url).then((response) => {
+            //     debugger;
+            //     var sss = response;
+
             // });
+            return Promise.resolve();
         }
     }
 

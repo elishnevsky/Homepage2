@@ -15,9 +15,12 @@
         "@types/gapi": "0.0.33",
         "@types/gapi.auth2": "0.0.41",
         "@types/gapi.calendar": "^3.0.2",
+        "@types/gapi.translate": "0.0.29",
+        "@types/gapi.youtube": "^3.0.32",
         "@types/jquery": "^3.2.12",
         "angular": "^1.6.5",
         "angular-sanitize": "^1.6.6",
+        "angularjs-bootstrap-datetimepicker": "^1.1.4",
         "bootstrap": "^3.3.7",
         "jquery": "^3.2.1"
     }

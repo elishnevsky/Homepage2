@@ -1,6 +1,6 @@
 namespace AppDomain {
 
-    class WeatherComponent {
+    class NewsComponent {
         public bindings: any;
         public controller: any;
         public controllerAs: string;
@@ -9,30 +9,30 @@ namespace AppDomain {
         constructor() {
             this.controller = WeatherController;
             this.controllerAs = 'vm';
-            this.templateUrl = '/app/weather/weather.component.html';
+            this.templateUrl = '/app/news/news.component.html';
         }
     }
 
     class WeatherController {
 
-        weatherForecast: any;
+        newsHeadlines: any;
 
         static $inject: string[] = ['$scope', 'GoogleAuth', 'GoogleService'];
 
         constructor(private $scope: ng.IScope, private auth: GoogleAuth, private googleService: GoogleService) {
-            console.log('WeatherComponent');
-            //this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { if (isSignedIn) this.getWeatherForecast(); });
+            console.log('NewsComponent');
+            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { if (isSignedIn) this.getNewsHeadlines(); });
         }
 
-        getWeatherForecast(): any {
-            console.log('WeatherComponent.getWeatherForecast()')
-            this.googleService.getWeatherForecast().then(forecast => {
-                this.weatherForecast = forecast;
+        getNewsHeadlines(): any {
+            console.log('NewsComponent.getNewsHeadlines()')
+            this.googleService.getNewsHeadlines().then(headlines => {
+                this.newsHeadlines = headlines;
                 this.$scope.$apply();
             });
             return;
         }
     }
 
-    angular.module('app').component('weatherComponent', new WeatherComponent());
+    angular.module('app').component('NewsComponent', new NewsComponent());
 }
