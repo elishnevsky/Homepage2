@@ -9,12 +9,19 @@ namespace AppDomain {
         snippet: string;
     }
 
-    export class CalendarEvent {
+    export interface CalendarEvent {
         id: string;
         summary: string;
         htmlLink: string;
         start: Date;
         end: Date;
+    }
+
+    export interface NewsHeadline {
+        title: string;
+        content: string;
+        description: string;
+        link: string;
     }
 
     export class GoogleService {
@@ -76,29 +83,38 @@ namespace AppDomain {
         getNewsHeadlines() {
             const feed = 'http://rss.newsru.com/top/big/';
             const url = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed);
-            return this.$http.get(url).then((response) => {
-                debugger;
-                var sss = response;
-
+            return this.$http.get(url).then((response: any) => {
+                let items = response.data.items;
+                let results = items.map(result => {
+                    let newsHeadline: NewsHeadline = {
+                        title: 'string',
+                        content: 'string',
+                        description: 'string',
+                        link: 'string'
+                    };
+                    return newsHeadline;
+                });
+                return this.$q.all(results);
             });
-        }
+        };
 
-        getWeatherForecast() {
-            // //const url = 'https://weather.gc.ca/city/pages/on-143_metric_e.html';
-            // //const url = 'http://rss.newsru.com/top/big/';
-            // //return this.$http.get(url);
-            // // const url = 'http://samples.openweathermap.org/data/2.5/forecast?q=London,us&mode=xml&appid=b1b15e88fa797225412429c1c50c122a1';
-            // // const trustedUrl = this.$sce.trustAsResourceUrl(url);
-            // // return this.$http.jsonp(trustedUrl);
-            // const url = 'https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Frss.newsru.com%2Ftop%2Fbig%2F';
-            // return this.$http.get(url).then((response) => {
-            //     debugger;
-            //     var sss = response;
+        // getWeatherForecast() {
+        //     // //const url = 'https://weather.gc.ca/city/pages/on-143_metric_e.html';
+        //     // //const url = 'http://rss.newsru.com/top/big/';
+        //     // //return this.$http.get(url);
+        //     // // const url = 'http://samples.openweathermap.org/data/2.5/forecast?q=London,us&mode=xml&appid=b1b15e88fa797225412429c1c50c122a1';
+        //     // // const trustedUrl = this.$sce.trustAsResourceUrl(url);
+        //     // // return this.$http.jsonp(trustedUrl);
+        //     // const url = 'https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Frss.newsru.com%2Ftop%2Fbig%2F';
+        //     // return this.$http.get(url).then((response) => {
+        //     //     debugger;
+        //     //     var sss = response;
 
-            // });
-            return Promise.resolve();
-        }
+        //     // });
+        //     return Promise.resolve();
+        // }
     }
 
     angular.module('app').service('GoogleService', GoogleService);
 }
+

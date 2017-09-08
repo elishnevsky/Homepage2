@@ -7,15 +7,16 @@ namespace AppDomain {
         public templateUrl: string;
 
         constructor() {
-            this.controller = WeatherController;
+            this.controller = NewsController;
             this.controllerAs = 'vm';
             this.templateUrl = '/app/news/news.component.html';
         }
     }
 
-    class WeatherController {
+    class NewsController {
 
-        newsHeadlines: any;
+        isSignedIn: boolean;
+        newsHeadlines: any[];
 
         static $inject: string[] = ['$scope', 'GoogleAuth', 'GoogleService'];
 
@@ -25,7 +26,6 @@ namespace AppDomain {
         }
 
         getNewsHeadlines(): any {
-            console.log('NewsComponent.getNewsHeadlines()')
             this.googleService.getNewsHeadlines().then(headlines => {
                 this.newsHeadlines = headlines;
                 this.$scope.$apply();
@@ -34,5 +34,5 @@ namespace AppDomain {
         }
     }
 
-    angular.module('app').component('NewsComponent', new NewsComponent());
+    angular.module('app').component('newsComponent', new NewsComponent());
 }

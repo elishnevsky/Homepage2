@@ -3,7 +3,7 @@
     <div ng-show="vm.isSignedIn">
         <div class="alert alert-danger" ng-hide="vm.calendarEvents">Please wait, loading...</div>
 
-        <datetimepicker data-ng-model="vm.dates"></datetimepicker>
+        <datetimepicker data-ng-model="vm.today"></datetimepicker>
 
         <pre>{{vm.dates|json}}</pre>
         

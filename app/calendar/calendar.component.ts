@@ -18,7 +18,6 @@ namespace AppDomain {
         isSignedIn: boolean;
         today: Date = new Date();
         calendarEvents: CalendarEvent[];
-        dates: Date[];
 
         static $inject: string[] = ['$scope', 'GoogleAuth', 'GoogleService'];
 
@@ -30,7 +29,6 @@ namespace AppDomain {
         getCalendarEvents() {
             this.googleService.getCalendarEvents().then(events => {
                 this.calendarEvents = <CalendarEvent[]>events;
-                this.dates = [new Date('2017-9-10'), new Date('2017-9-12'), new Date('2017-9-14')]
                 this.$scope.$apply();
             });
         }
