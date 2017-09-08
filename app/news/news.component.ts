@@ -16,21 +16,22 @@ namespace AppDomain {
     class NewsController {
 
         isSignedIn: boolean;
-        newsHeadlines: any[];
+        newsHeadlines: NewsHeadline[];
 
         static $inject: string[] = ['$scope', 'GoogleAuth', 'GoogleService'];
 
         constructor(private $scope: ng.IScope, private auth: GoogleAuth, private googleService: GoogleService) {
             console.log('NewsComponent');
-            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { if (isSignedIn) this.getNewsHeadlines(); });
+            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { this.isSignedIn = isSignedIn; if (isSignedIn) this.getNewsHeadlines(); });
+            //this.getNewsHeadlines();
         }
 
-        getNewsHeadlines(): any {
+        getNewsHeadlines() {
             this.googleService.getNewsHeadlines().then(headlines => {
-                this.newsHeadlines = headlines;
-                this.$scope.$apply();
+                this.newsHeadlines = <NewsHeadline[]>headlines;
+                console.log(this.newsHeadlines);
+                //this.$scope.$apply();
             });
-            return;
         }
     }
 
