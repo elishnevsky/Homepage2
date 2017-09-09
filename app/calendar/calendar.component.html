@@ -1,6 +1,6 @@
 <div class="component">
     <h2>Calendar Component</h2>
-    <div ng-show="vm.isSignedIn">
+    <div ng-show="vm.signedIn">
         <div class="alert alert-danger" ng-hide="vm.calendarEvents">Please wait, loading...</div>
 
         <datetimepicker data-ng-model="vm.today"></datetimepicker>

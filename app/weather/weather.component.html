@@ -1,6 +1,6 @@
 <div class="component">
     <h2>Weather Component</h2>
-    <div ng-show="vm.isSignedIn">
+    <div ng-show="vm.signedIn">
         <div class="alert alert-danger" ng-hide="vm.weatherForecast">Please wait, loading...</div>
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="forecast in vm.weatherForecast">

@@ -10,27 +10,26 @@ namespace AppDomain {
             this.controller = WeatherController;
             this.controllerAs = 'vm';
             this.templateUrl = '/app/weather/weather.component.html';
+            //this.bindings = { feed: '<' };
         }
     }
 
     class WeatherController {
 
-        weatherForecast: any;
+        weatherForecast: WeatherForecast[];
 
-        static $inject: string[] = ['$scope', 'GoogleAuth', 'GoogleService'];
+        static $inject: string[] = ['$scope', 'GoogleService'];
 
-        constructor(private $scope: ng.IScope, private auth: GoogleAuth, private googleService: GoogleService) {
+        constructor(private $scope: ng.IScope,  private service: GoogleService) {
             console.log('WeatherComponent');
-            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { if (isSignedIn) this.getWeatherForecast(); });
+            this.getWeatherForecast('http://rss.newsru.com/top/big/');
         }
 
-        getWeatherForecast(): any {
+        getWeatherForecast(feed: string) {
             console.log('WeatherComponent.getWeatherForecast()')
-            this.googleService.getWeatherForecast().then(forecast => {
-                this.weatherForecast = forecast;
-                this.$scope.$apply();
+            this.service.getWeatherForecast(feed).then(data => {
+                this.weatherForecast = <WeatherForecast[]>data;
             });
-            return;
         }
     }
 

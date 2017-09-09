@@ -15,19 +15,19 @@ namespace AppDomain {
 
     class GmailController {
 
-        isSignedIn: boolean;
+        signedIn: boolean;
         gmailMessages: GmailMessage[];
 
-        static $inject: string[] = ['$scope', 'GoogleAuth', 'GoogleService', '$interval'];
+        static $inject: string[] = ['$scope', 'GoogleAuth', 'GmailService', '$interval'];
 
-        constructor(private $scope: ng.IScope, private auth: GoogleAuth, private googleService: GoogleService, public $interval: ng.IIntervalService) {
+        constructor(private $scope: ng.IScope, private auth: GoogleAuth, private service: GmailService, public $interval: ng.IIntervalService) {
             console.log('GmailComponent');
-            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { this.isSignedIn = isSignedIn; if (isSignedIn) this.getGmailMessages(); });
-            this.$interval(() => { if (this.auth.isSignedIn) this.getGmailMessages(); }, 60000); // Check gmail message every minute
+            this.$scope.$watch(() => this.auth.signedIn, signedIn => { this.signedIn = signedIn; if (signedIn) this.getGmailMessages(); });
+            this.$interval(() => { if (this.auth.signedIn) this.getGmailMessages(); }, 60000);
         }
 
         getGmailMessages() {
-            this.googleService.getGmailMessages().then(messages => {
+            this.service.getGmailMessages().then(messages => {
                 this.gmailMessages = messages;
                 this.$scope.$apply();
             });
