@@ -5,8 +5,6 @@
 
         <datetimepicker data-ng-model="vm.today"></datetimepicker>
 
-        <pre>{{vm.dates|json}}</pre>
-        
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="event in vm.calendarEvents">
                 <a href="{{event.htmlLink}}" target="_blank">{{event.summary}}</a>

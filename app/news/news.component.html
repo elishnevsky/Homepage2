@@ -4,7 +4,7 @@
         <div class="alert alert-danger" ng-hide="vm.newsHeadlines">Please wait, loading...</div>
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="item in vm.newsHeadlines">
-                <p>{{item.title}}</p>
+                <strong><a href="{{item.link}}">{{item.title}}</a></strong>
                 <p>{{item.description}}</p>
             </li>
         </ul>

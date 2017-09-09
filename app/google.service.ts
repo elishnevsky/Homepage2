@@ -19,9 +19,8 @@ namespace AppDomain {
 
     export interface NewsHeadline {
         title: string;
-        content: string;
-        description: string;
         link: string;
+        description: string;
     }
 
     export class GoogleService {
@@ -51,22 +50,24 @@ namespace AppDomain {
                                 return gmailMessage;
                             });
                     });
-
                     return this.$q.all(requests);
                 });
         }
 
         getCalendarEvents() {
-            return gapi.client.calendar.events.list({
+            let deferred = this.$q.defer();
+            let params = {
                 calendarId: 'primary',
                 timeMin: (new Date()).toISOString(),
                 showDeleted: false,
                 singleEvents: true,
                 maxResults: 10,
-                orderBy: 'startTime'
-            }).then(response => {
+                //orderBy: 'startTime'
+            };
+            gapi.client.calendar.events.list(params).then(response => {
                 let events = response.result.items;
-                let results = events.map(event => {
+                let results: CalendarEvent[] = [];
+                events.forEach(event => {
                     let calendarEvent: CalendarEvent = {
                         id: event.id,
                         summary: event.summary,
@@ -74,25 +75,25 @@ namespace AppDomain {
                         start: new Date(event.start.date == undefined ? event.start.dateTime == undefined ? '' : event.start.dateTime : event.start.date),
                         end: new Date(event.end.date == undefined ? event.end.dateTime == undefined ? '' : event.end.dateTime : event.end.date)
                     };
-                    return calendarEvent;
+                    results.push(calendarEvent);
                 });
-                return this.$q.all(results);
+                deferred.resolve(results);
             });
+            return deferred.promise;
         }
 
-        getNewsHeadlines(): ng.IHttpPromise<any> {
+        getNewsHeadlines(feed: string): ng.IHttpPromise<any> {
             let deferred = this.$q.defer();
-            const feed = 'http://rss.newsru.com/top/big/';
+            //const feed = 'http://rss.newsru.com/top/big/';
             const url = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed);
             this.$http.get(url).then((response: any) => {
                 let items = response.data.items;
                 let results: NewsHeadline[] = [];
-                items.forEach(element => {
+                items.forEach(item => {
                     let newsHeadline: NewsHeadline = {
-                        title: 'string',
-                        content: 'string',
-                        description: 'string',
-                        link: 'string'
+                        title: item.title,
+                        link: item.link,
+                        description: item.description
                     };
                     results.push(newsHeadline);
                 });
