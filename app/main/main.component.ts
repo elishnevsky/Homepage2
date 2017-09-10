@@ -16,13 +16,13 @@ namespace AppDomain {
     class MainController {
 
         currentDate: Date = new Date();
-        signedIn: boolean;
+        isSignedIn: boolean;
 
         static $inject: string[] = ['$scope', 'GoogleAuth', '$interval'];
 
         constructor(private $scope: ng.IScope, private auth: GoogleAuth, private $interval: ng.IIntervalService) {
             console.log('MainComponent');
-            this.$scope.$watch(() => this.auth.signedIn, signedIn => { this.signedIn = signedIn });
+            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { this.isSignedIn = isSignedIn });
             this.$interval(() => { this.currentDate = new Date(); }, 60000);
         }
 

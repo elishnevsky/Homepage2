@@ -16,7 +16,7 @@ namespace AppDomain {
 
     class NewsController {
 
-        newsHeadlines: NewsHeadline[];
+        headlines: NewsHeadline[];
 
         static $inject: string[] = ['$scope', 'GoogleService'];
 
@@ -27,7 +27,7 @@ namespace AppDomain {
 
         getNewsHeadlines(feed: string) {
             this.service.getNewsHeadlines(feed).then(headlines => {
-                this.newsHeadlines = <NewsHeadline[]>headlines;
+                this.headlines = <NewsHeadline[]>headlines;
                 //this.$scope.$apply();
             });
         }

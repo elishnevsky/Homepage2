@@ -1,11 +1,26 @@
 <div class="component">
-    <h2>Weather Component</h2>
-    <div ng-show="vm.signedIn">
-        <div class="alert alert-danger" ng-hide="vm.weatherForecast">Please wait, loading...</div>
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="forecast in vm.weatherForecast">
-                {{forecast}}
-            </li>
-        </ul>
-    </div>
+    <!-- <h2>Weather Component</h2> -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-center" ng-repeat="item in vm.forecast" style="vertical-align: top; width: 25%;">
+                    <a href="{{item.link}}">{{item.day}}</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-center" ng-repeat="item in vm.forecast" style="vertical-align: top; width: 25%;">
+                    <img src="{{item.icon}}" alt="{{item.description.split(',')[0]}}">
+                    <p>{{item.condition}}</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center" ng-repeat="item in vm.forecast" style="vertical-align: top; width: 25%;">
+                    <strong class="text-danger">{{item.high}}</strong>
+                    <p class="text-primary">{{item.low}}</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

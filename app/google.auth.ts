@@ -8,7 +8,7 @@ namespace AppDomain {
 
     export class GoogleAuth {
 
-        signedIn: boolean;
+        isSignedIn: boolean;
 
         static $inject: string[] = ["$rootScope"];
 
@@ -24,11 +24,11 @@ namespace AppDomain {
                 clientId: CLIENT_ID,
                 scope: SCOPE
             }).then(() => {
-                gapi.auth2.getAuthInstance().isSignedIn.listen(signedIn => {
-                    this.signedIn = signedIn;
+                gapi.auth2.getAuthInstance().isSignedIn.listen(isSignedIn => {
+                    this.isSignedIn = isSignedIn;
                     this.$rootScope.$apply();
                 });
-                this.signedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
+                this.isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
                 this.$rootScope.$apply();
             });
         }

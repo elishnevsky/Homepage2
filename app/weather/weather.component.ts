@@ -16,19 +16,18 @@ namespace AppDomain {
 
     class WeatherController {
 
-        weatherForecast: WeatherForecast[];
+        forecast: WeatherForecast[];
 
         static $inject: string[] = ['$scope', 'GoogleService'];
 
         constructor(private $scope: ng.IScope,  private service: GoogleService) {
             console.log('WeatherComponent');
-            this.getWeatherForecast('http://rss.newsru.com/top/big/');
+            this.getWeatherForecast('http://rss.theweathernetwork.com/weather/caon0696');
         }
 
         getWeatherForecast(feed: string) {
-            console.log('WeatherComponent.getWeatherForecast()')
-            this.service.getWeatherForecast(feed).then(data => {
-                this.weatherForecast = <WeatherForecast[]>data;
+            this.service.getWeatherForecast(feed).then(forecast => {
+                this.forecast = <WeatherForecast[]>forecast;
             });
         }
     }

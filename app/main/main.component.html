@@ -13,7 +13,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <form class="navbar-form navbar-right">
-                    <button class="btn btn-success" ng-click="vm.signedIn?vm.signOut():vm.signIn();" ng-bind="vm.signedIn?'Sign Out':'Sign In'"></button>
+                    <button class="btn btn-success" ng-click="vm.isSignedIn?vm.signOut():vm.signIn();" ng-bind="vm.isSignedIn?'Sign Out':'Sign In'"></button>
                 </form>
                 <form class="navbar-form navbar-left" role="search" method="get" target="_blank" action="https://www.google.com/search?">
                     <div class="form-group">
@@ -26,21 +26,23 @@
     </nav>
     <div class="jumbotron">
         <div class="container">
-            <h1>{{vm.currentDate|date:'fullDate'}} <span class="text-danger">{{vm.currentDate|date:'shortTime'}}</span></h1>
-            <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron
-                and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+            <h1>
+                {{vm.currentDate|date:'EEEE, d MMMM'}} 
+                <span class="text-danger">{{vm.currentDate|date:'h:mm a'}}</span>
+            </h1>
         </div>
     </div>
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <gmail-component></gmail-component>
+                <weather-component></weather-component>
+                <news-component></news-component>
             </div>
             <div class="col-md-4">
                 <calendar-component></calendar-component>
             </div>
             <div class="col-md-4">
-                <news-component></news-component>
+                <gmail-component></gmail-component>
             </div>
         </div>
     </div>

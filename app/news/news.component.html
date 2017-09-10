@@ -1,12 +1,9 @@
 <div class="component">
-    <h2>News Component</h2>
-    <div ng-show="vm.signedIn">
-        <div class="alert alert-danger" ng-hide="vm.newsHeadlines">Please wait, loading...</div>
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="item in vm.newsHeadlines">
-                <strong><a href="{{item.link}}">{{item.title}}</a></strong>
-                <p>{{item.description}}</p>
-            </li>
-        </ul>
-    </div>
+    <!-- <h2>News Component</h2> -->
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="item in vm.headlines">
+            <strong><a href="{{item.link}}">{{item.title}}</a></strong>
+            <p>{{item.description}}</p>
+        </li>
+    </ul>
 </div>

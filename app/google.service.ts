@@ -1,15 +1,13 @@
-//declare namespace gapi.client.Request { };
-
 namespace AppDomain {
 
-    export interface GmailMessage {
+    export class GmailMessage {
         id: string;
         from: string;
         subject: string;
         snippet: string;
     }
 
-    export interface CalendarEvent {
+    export class CalendarEvent {
         id: string;
         summary: string;
         htmlLink: string;
@@ -17,16 +15,19 @@ namespace AppDomain {
         end: Date;
     }
 
-    export interface NewsHeadline {
+    export class NewsHeadline {
         title: string;
         link: string;
         description: string;
+        icon: string;
     }
 
-    export interface WeatherForecast {
-        title: string;
-        link: string;
-        description: string;
+    export class WeatherForecast {
+        day: string;
+        condition: string;
+        icon: string;
+        low: string;
+        high: string;
     }
 
     export class GoogleService {
@@ -96,7 +97,8 @@ namespace AppDomain {
                     let newsHeadline: NewsHeadline = {
                         title: item.title,
                         link: item.link,
-                        description: item.description
+                        description: item.description,
+                        icon: ''
                     };
                     results.push(newsHeadline);
                 });
@@ -110,14 +112,16 @@ namespace AppDomain {
             const url = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed);
             this.$http.get(url).then((response: any) => {
                 let items = response.data.items;
-                let results: NewsHeadline[] = [];
+                let results: WeatherForecast[] = [];
                 items.forEach(item => {
-                    let newsHeadline: NewsHeadline = {
-                        title: item.title,
-                        link: item.link,
-                        description: item.description
+                    let weatherForecast: WeatherForecast = {
+                        day: item.title.split(',')[0],
+                        condition: item.description.split(',')[0],
+                        icon: 'http://rss.theweathernetwork.com/common/images/web/wicons/b.gif',
+                        high: item.description.split(',')[1],
+                        low: item.description.split(',')[2],
                     };
-                    results.push(newsHeadline);
+                    results.push(weatherForecast);
                 });
                 deferred.resolve(results);
             });
