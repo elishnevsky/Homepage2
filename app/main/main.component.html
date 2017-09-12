@@ -1,6 +1,6 @@
 <div class="component">
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
                     aria-controls="navbar">
@@ -25,14 +25,14 @@
         </div>
     </nav>
     <div class="jumbotron">
-        <div class="container">
+        <div class="container-fluid">
             <h1>
                 {{vm.currentDate|date:'EEEE, d MMMM'}} 
                 <span class="text-danger">{{vm.currentDate|date:'h:mm a'}}</span>
             </h1>
         </div>
     </div>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-4">
                 <weather-component></weather-component>

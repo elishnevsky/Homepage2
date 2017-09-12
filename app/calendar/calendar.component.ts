@@ -18,6 +18,14 @@ namespace AppDomain {
         isSignedIn: boolean;
         today: Date = new Date();
         calendarEvents: CalendarEvent[];
+        eventSources = [];
+        calendarOptions: {
+            header: {
+                left: 'month basicWeek basicDay agendaWeek agendaDay',
+                center: 'title',
+                right: 'today prev,next'
+            }
+        }
 
         static $inject: string[] = ['$scope', 'GoogleAuth', 'GoogleService', '$interval'];
 
