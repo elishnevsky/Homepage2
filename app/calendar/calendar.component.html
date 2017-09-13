@@ -2,7 +2,7 @@
     <!-- <h2>Calendar Component</h2> -->
     <div ng-show="vm.isSignedIn">
         <div ui-calendar="vm.calendarOptions" ng-model="vm.eventSources"></div>
-        <datetimepicker data-ng-model="vm.today"></datetimepicker>
+        <!-- <datetimepicker data-ng-model="vm.today"></datetimepicker> -->
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="event in vm.calendarEvents">
                 <a href="{{event.htmlLink}}" target="_blank">{{event.summary}}</a>

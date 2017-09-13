@@ -1,16 +1,19 @@
 namespace AppDomain {
 
+    // Application Key assigned in Google Developers Console
     const API_KEY = 'AIzaSyBIQf94StM7HHCblv-xNewi5ujj7PScHIY';
-    const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest',
-        "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"]; // Array of API discovery doc URLs for APIs used by the quickstart
-    const CLIENT_ID = '597988925903-n92krp955lrp46mshfndmcvo0sqp2eks.apps.googleusercontent.com'; // Client ID and API key from the Developer Console
-    const SCOPE = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar.readonly'; // Authorization scopes required by the API; multiple scopes can be included, separated by spaces.
+    // Array of API discovery doc URLs for APIs used by the quickstart
+    const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest', 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest']; 
+    // Client ID and API key from the Developer Console
+    const CLIENT_ID = '597988925903-n92krp955lrp46mshfndmcvo0sqp2eks.apps.googleusercontent.com'; 
+    // Authorization scopes required by the API; multiple scopes can be included, separated by spaces.
+    const SCOPE = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar.readonly'; 
 
     export class GoogleAuth {
 
         isSignedIn: boolean;
 
-        static $inject: string[] = ["$rootScope"];
+        static $inject: string[] = ['$rootScope'];
 
         constructor(private $rootScope: ng.IRootScopeService) {
             console.log('GoogleAuth');
@@ -42,6 +45,6 @@ namespace AppDomain {
         }
     }
 
-    angular.module("app").service("GoogleAuth", GoogleAuth);
+    angular.module('app').service('GoogleAuth', GoogleAuth);
 
 }
