@@ -46,7 +46,7 @@ namespace AppDomain {
     getCalendarEvents() {
         this.service.getCalendarEvents().then(events => {
             this.calendarEvents = events;
-            //this.$scope.$apply();
+            this.$scope.$apply();
         });
     }
     }

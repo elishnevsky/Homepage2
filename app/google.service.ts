@@ -61,30 +61,76 @@ namespace AppDomain {
         }
 
 
-    getCalendarEvents() {
-        // calendarId: 'primary, slishnevsky@gmail.com, vlishnevsky@gmail.com, #contacts@group.v.calendar.google.com',
-        return gapi.client.calendar.calendarList.list().then(response => {
-            if (response.result.items === undefined) return [];
-            let requests = response.result.items.map(calendar => {
-                let params = { calendarId: calendar.id, timeMin: (new Date()).toISOString(), showDeleted: false, singleEvents: true, maxResults: 10 };
-                return gapi.client.calendar.events.list(params)
-                    .then(response => {
-                        let events: any = response.result.items;
-                        return events.map(event => {
-                            let calendarEvent: CalendarEvent = {
-                                id: event.id,
-                                summary: event.summary,
-                                htmlLink: event.htmlLink,
-                                start: new Date(event.start.date == undefined ? event.start.dateTime == undefined ? '' : event.start.dateTime : event.start.date),
-                                end: new Date(event.end.date == undefined ? event.end.dateTime == undefined ? '' : event.end.dateTime : event.end.date)
-                            };
-                        });
-                    });
+        getCalendarEvents() {
+            // calendarId: 'primary, slishnevsky@gmail.com, vlishnevsky@gmail.com, #contacts@group.v.calendar.google.com',
+            return gapi.client.calendar.calendarList.list()
+                .then(response => {
+                    if (response.result.items === undefined) return [];
+                    let requests = response.result.items.map(calendar => {
+                        let params = { calendarId: calendar.id, timeMin: (new Date()).toISOString(), showDeleted: false, singleEvents: true, maxResults: 10 };
+                        return gapi.client.calendar.events.list(params)
+                            .then(response => {
+                                let events: any = response.result.items;
+                                return events.map(event => {
+                                    let calendarEvent: CalendarEvent = {
+                                        id: event.id,
+                                        summary: event.summary,
+                                        htmlLink: event.htmlLink,
+                                        start: new Date(event.start.date == undefined ? event.start.dateTime == undefined ? '' : event.start.dateTime : event.start.date),
+                                        end: new Date(event.end.date == undefined ? event.end.dateTime == undefined ? '' : event.end.dateTime : event.end.date)
+                                    };
+                                    return calendarEvent;
+                                });
+                            });
 
-            });
-            return this.$q.all(requests);
-        });
-    }
+                    });
+                    return this.$q.all(requests);
+                })
+                .then(events => {
+                    let allEvents = [];
+                    events.forEach((e: any) => {
+                        allEvents = allEvents.concat(e);
+                    });
+                    return allEvents;
+                });
+        }
+
+        // getCalendarEvents(): ng.IPromise<CalendarEvent[]> {
+        //     const defer = this.$q.defer<CalendarEvent[]>();
+
+        //     gapi.client.calendar.calendarList.list()
+        //         .then(response => {
+        //             const promises: any = [];
+        //             response.result.items.map(calendar => {
+        //                 const params = { calendarId: calendar.id, timeMin: (new Date()).toISOString(), showDeleted: false, singleEvents: true, maxResults: 10 };
+        //                 const promise = gapi.client.calendar.events.list(params).then(response => response.result.items);
+        //                 promises.push(promise);
+        //             });
+        //             return this.$q.all(promises);
+        //         })
+        //         .then(events => {
+        //             let allEvents = [];
+        //             events.forEach((e: any) => {
+        //                 allEvents = allEvents.concat(e);
+        //             });
+        //             return allEvents;
+        //         })
+        //         .then((events: gapi.client.calendar.Event[]) => {
+        //             return events.map(event => {
+        //                 const calendarEvent: CalendarEvent = {
+        //                     id: event.id,
+        //                     summary: event.summary,
+        //                     htmlLink: event.htmlLink,
+        //                     start: new Date(event.start.date == undefined ? event.start.dateTime == undefined ? '' : event.start.dateTime : event.start.date),
+        //                     end: new Date(event.end.date == undefined ? event.end.dateTime == undefined ? '' : event.end.dateTime : event.end.date)
+        //                 };
+        //                 return calendarEvent;
+        //             });
+        //         })
+        //         .then(events => defer.resolve(events));
+
+        //     return defer.promise;
+        // }
 
         // getCalendars() {
         //     let deferred = this.$q.defer();
