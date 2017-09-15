@@ -17,8 +17,10 @@ namespace AppDomain {
 
         isSignedIn: boolean;
         today: Date = new Date();
-        calendarEvents: CalendarEvent[];
+        calendarEvents: any[];
+        calendars: any[];
         eventSources = [];
+
         calendarOptions: {
             header: {
                 left: 'month basicWeek basicDay agendaWeek agendaDay',
@@ -31,16 +33,22 @@ namespace AppDomain {
 
         constructor(private $scope: ng.IScope, private auth: GoogleAuth, private service: GoogleService, public $interval: ng.IIntervalService) {
             console.log('CalendarComponent');
-            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { this.isSignedIn = isSignedIn; if (isSignedIn) this.getCalendarEvents(); });
+            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => {
+            this.isSignedIn = isSignedIn; 
+            if (isSignedIn) {
+                this.getCalendarEvents();
+                //this.getCalendars();
+            }
+            });
             //this.$interval(() => { if (this.auth.isSignedIn) this.getCalendarEvents(); }, 60000);
         }
 
-        getCalendarEvents() {
-            this.service.getCalendarEvents().then(events => {
-                this.calendarEvents = <CalendarEvent[]>events;
-                //this.$scope.$apply();
-            });
-        }
+    getCalendarEvents() {
+        this.service.getCalendarEvents().then(events => {
+            this.calendarEvents = events;
+            //this.$scope.$apply();
+        });
+    }
     }
 
     angular.module('app').component('calendarComponent', new CalendarComponent());
