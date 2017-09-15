@@ -33,20 +33,13 @@ namespace AppDomain {
 
         constructor(private $scope: ng.IScope, private auth: GoogleAuth, private service: GoogleService, public $interval: ng.IIntervalService) {
             console.log('CalendarComponent');
-            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => {
-            this.isSignedIn = isSignedIn; 
-            if (isSignedIn) {
-                this.getCalendarEvents();
-                //this.getCalendars();
-            }
-            });
-            //this.$interval(() => { if (this.auth.isSignedIn) this.getCalendarEvents(); }, 60000);
+            this.$scope.$watch(() => this.auth.isSignedIn, isSignedIn => { this.isSignedIn = isSignedIn; if (isSignedIn) this.getCalendarEvents(); });
         }
 
     getCalendarEvents() {
         this.service.getCalendarEvents().then(events => {
             this.calendarEvents = events;
-            this.$scope.$apply();
+            //this.$scope.$apply();
         });
     }
     }
